@@ -1,0 +1,259 @@
+<div class="container mt-2 mb-4">
+  <div class="row">
+    <div class="col-md-10 offset-md-2 my-2">
+      <h2>{{edit? 'Edit ' + title?.value:'New Movie'}}</h2>
+    </div>
+    <div class="col-md-4 offset-md-2">
+      <!-- Al formgroup le decimos que variable es la va a contener el formgroup [formGroup]="movieForm"  -->
+      <ng-form [formGroup]="movieForm">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" formControlName="title" id="title" placeholder="Title">
+          <label for="title">Title</label>
+        </div>
+
+        <!-- TODO VALIDACIÓN DE FORMULARIOS -->
+        <!-- Cuando escribo es dirty y cuando lo selecciono y voy a otro es touched  -->
+        <div *ngIf="title?.invalid && (title?.dirty || title?.touched)" class="alert alert-warning">
+          <!-- Ponemos un div por cada comprobación que tenemos en el formulario -->
+          <!-- ? significa QUE SON OPCIONALES -->
+          <div *ngIf="title?.errors?.['required']">
+            El campo title es obligatorio
+          </div>
+          <div *ngIf="title?.errors?.['minlength']">
+            El campo title tiene que tener minimo 2 carácteres
+          </div>
+          <div *ngIf="title?.errors?.['notOnlyWhiteSpace']">
+            El campo title no puede tener espacios en blanco
+          </div>
+          <div *ngIf="title?.errors?.['palabraProhibida']">
+            El campo title no puede contener la palabra sex
+          </div>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" formControlName="year" id="year" placeholder="Year">
+          <label for="year">Year</label>
+        </div>
+
+        <!-- TODO VALIDACIÓN DE FORMULARIOS -->
+        <!-- Cuando escribo es dirty y cuando lo selecciono y voy a otro es touched  -->
+        <div *ngIf="year?.invalid && (year?.dirty || year?.touched)" class="alert alert-warning">
+          <!-- Ponemos un div por cada comprobación que tenemos en el formulario -->
+          <!-- ? significa QUE SON OPCIONALES -->
+          <div *ngIf="year?.errors?.['required']">
+            El campo year es obligatorio
+          </div>
+          <div *ngIf="year?.errors?.['min']">
+            El año mínimo tiene que ser 1900
+          </div>
+          <div *ngIf="year?.errors?.['max']">
+            El año máximo tiene que ser el año actual
+          </div>
+        </div>
+
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" formControlName="director" id="director" placeholder="Director">
+          <label for="director">Director</label>
+        </div>
+
+        <!-- TODO VALIDACIÓN DE FORMULARIOS -->
+        <!-- Cuando escribo es dirty y cuando lo selecciono y voy a otro es touched  -->
+        <div *ngIf="director?.invalid && (director?.dirty || director?.touched)" class="alert alert-warning">
+          <!-- Ponemos un div por cada comprobación que tenemos en el formulario -->
+          <!-- ? significa QUE SON OPCIONALES -->
+          <div *ngIf="director?.errors?.['required']">
+            El campo director es obligatorio
+          </div>
+          <div *ngIf="director?.errors?.['minlength']">
+            El campo director tiene que tener minimo 2 carácteres
+          </div>
+          <div *ngIf="director?.errors?.['notOnlyWhiteSpace']">
+            El campo director no puede tener espacios en blanco
+          </div>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" formControlName="plot" id="plot" placeholder="Plot">
+          <label for="plot">Plot</label>
+        </div>
+        <!-- TODO VALIDACIÓN DE FORMULARIOS -->
+        <!-- Cuando escribo es dirty y cuando lo selecciono y voy a otro es touched  -->
+        <div *ngIf="plot?.invalid && (plot?.dirty || plot?.touched)" class="alert alert-warning">
+          <!-- Ponemos un div por cada comprobación que tenemos en el formulario -->
+          <!-- ? significa QUE SON OPCIONALES -->
+          <div *ngIf="plot?.errors?.['required']">
+            El campo plot es obligatorio
+          </div>
+          <div *ngIf="plot?.errors?.['minlength']">
+            El campo plot tiene que tener minimo 2 carácteres
+          </div>
+          <div *ngIf="plot?.errors?.['notOnlyWhiteSpace']">
+            El campo plot no puede tener espacios en blanco
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-8">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="poster" id="poster" placeholder="Poster">
+              <label for="poster">Poster</label>
+            </div>
+            <!-- TODO VALIDACIÓN DE FORMULARIOS -->
+            <div *ngIf="poster?.invalid && (poster?.dirty || poster?.touched)" class="alert alert-warning">
+              <!-- Ponemos un div por cada comprobación que tenemos en el formulario -->
+              <!-- ? significa QUE SON OPCIONALES -->
+              <div *ngIf="poster?.errors?.['required']">
+                El campo poster es obligatorio
+              </div>
+              <div *ngIf="poster?.errors?.['minlength']">
+                El campo poster tiene que tener minimo 2 carácteres
+              </div>
+              <div *ngIf="poster?.errors?.['notOnlyWhiteSpace']">
+                El campo poster no puede tener espacios en blanco
+              </div>
+            </div>
+
+          </div>
+          <div class="col-4">
+            <img [src]="poster?.value || 'assets/images/img.png'" alt="poster image" class="img-fluid">
+          </div>
+        </div>
+
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" formControlName="favorite" role="switch" id="favorite">
+          <label class="form-check-label" for="favorite">Favorite</label>
+        </div>
+
+        <!-- HEMOS CREADO UN DIV CON UN FORMGROUP PORQUE imdb es un objeto -->
+        <div formGroupName="imdb">
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control" formControlName="rating" id="rating" placeholder="Rating">
+            <label for="rating">Rating</label>
+          </div>
+          <!-- TODO VALIDACIÓN DE FORMULARIOS -->
+
+          <div *ngIf="rating?.invalid && (rating?.dirty || rating?.touched)" class="alert alert-warning">
+            <!-- Ponemos un div por cada comprobación que tenemos en el formulario -->
+            <!-- ? significa QUE SON OPCIONALES -->
+            <div *ngIf="rating?.errors?.['required']">
+              El campo rating es obligatorio
+            </div>
+            <div *ngIf="rating?.errors?.['min']">
+              El campo rating tiene que tener como minimo un valor de 0
+            </div>
+            <div *ngIf="rating?.errors?.['max']">
+              El campo rating tiene que tener como máximo un valor de 10
+            </div>
+          </div>
+
+
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control" formControlName="votes" id="votes" placeholder="Votes">
+            <label for="votes">Votes</label>
+          </div>
+
+          <!-- TODO VALIDACIÓN DE FORMULARIOS -->
+          <div *ngIf="votes?.invalid && (votes?.dirty || votes?.touched)" class="alert alert-warning">
+            <!-- Ponemos un div por cada comprobación que tenemos en el formulario -->
+            <!-- ? significa QUE SON OPCIONALES -->
+            <div *ngIf="votes?.errors?.['required']">
+              El campo votes es obligatorio
+            </div>
+            <div *ngIf="votes?.errors?.['min']">
+              El campo votes no puede ser negativo
+            </div>
+          </div>
+
+        </div>
+        <!-- Fin Formgroup IMDB -->
+
+        <!-- Sección para los géneros -->
+        <label for="genres">Genres</label>
+        <!-- La propiedad multiple es porque es un array -->
+        <!--
+        El genresDB nos muestra todos los generos que tiene nuestra base de datos
+        Este se encarga de iterar estos generos.
+        Lo que selecciona el usuario se guarda en el formcontrol
+        Pero los generos que mostramos son los que tiene nuestra base de datos
+        Este será el valor que se va a guardar cuando lo seleccione el usuario [value]="gen"
+        -->
+        <select class="form-select" id="genres" formControlName="genres" multiple aria-label="Select genres">
+          <option *ngFor="let gen of genresBD" [value]="gen">{{ gen }}</option>
+        </select>
+        <div *ngIf="genres?.invalid && (genres?.dirty || genres?.touched)" class="alert alert-warning">
+          <!-- Ponemos un div por cada comprobación que tenemos en el formulario -->
+          <!-- ? significa QUE SON OPCIONALES -->
+          <div *ngIf="genres?.errors?.['required']">
+            El campo genres es obligatorio
+          </div>
+        </div>
+      </ng-form>
+
+      <!-- Añadir sección nueva -->
+      <div class="row mt-3">
+        <div class="col-lg-8" [formGroup]="formNewGenre">
+          <div class="form-floating mb-3">
+            <input type="text" formControlName="newGenre" class="form-control" id="nuevoGenero"
+                   placeholder="nuevoGenero">
+            <label for="nuevoGenero">Nuevo género</label>
+          </div>
+          <div *ngIf="newGenre?.invalid && (newGenre?.dirty || newGenre?.touched)" class="alert alert-warning">
+            <!-- Ponemos un div por cada comprobación que tenemos en el formulario -->
+            <!-- ? significa QUE SON OPCIONALES -->
+            <div *ngIf="newGenre?.errors?.['minlength']">
+              El campo nuevo genero tiene que tener como minimo 2 caracteres
+            </div>
+            <div *ngIf="newGenre?.errors?.['notOnlyWhiteSpace']">
+              El campo nuevo genero no puede tener espacios en blanco
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg-4 pt-2">
+          <h3>
+            <fa-icon [icon]="faCirclePlus" (click)="addNewGenre()"></fa-icon>
+          </h3>
+        </div>
+      </div>
+      <!-- Fin de la nueva sección -->
+    </div>
+
+    <div class="col-lg-4 col-xl-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>
+              {{ title?.value === '' ? 'Title': title?.value }}
+              <fa-icon [icon]="faHeart" *ngIf="favorite?.value"
+                       class="text-danger img-fluid" [fixedWidth]></fa-icon>
+              <fa-icon [icon]="faHeartBroken" *ngIf="!favorite?.value"
+                       class="text-danger img-fluid" [fixedWidth]></fa-icon>
+            </h2>
+          </div>
+          <div class="card-subtitle">{{ director?.value === '' ? 'Director': director?.value }} || {{ year?.value }}</div>
+        </div>
+        <img [src]="poster?.value || 'assets/images/img.png'" [alt]="title?.value" class="card-img-top">
+        <div class="card-body">
+          <p class="card-text">{{ plot?.value === '' ? 'Plot':plot?.value }}</p>
+          <p class="card-text"><strong>IMDB: </strong> <span
+            class="badge text-bg-success">{{ rating?.value }}</span></p>
+          <p class="card-text"><strong>Votes: </strong> <span
+            class="badge text-bg-success">{{ votes?.value }}</span></p>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex justify-content-between">
+            <p class="text-muted"><span
+              *ngFor="let genre of genres?.value; let last = last">{{ last ? genre + '.' : genre + ', ' }}</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center my-3">
+        <button class="btn btn-success" (click)="edit?editMovie(): addMovie()">{{ edit ? 'Edit Movie' : 'Add Movie' }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

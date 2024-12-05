@@ -1,0 +1,49 @@
+<div class="row my-3 justify-content-center">
+  <div class="col-lg-6 col-xxl-6 my-2" *ngIf="char">
+    <div class="card sombra">
+      <div class="card-header bg-secondary-subtle">
+        <div class="card-title">
+          <h3 class="text-primary text-center">{{ char.name }}</h3>
+        </div>
+      </div>
+      <img [src]="char.image" class="card-img-top p-1 img-fluid" [alt]="char.name">
+      <div class="card-body bg-secondary-subtle">
+        <p><strong>Gender: </strong>{{ char.gender }}</p>
+        <p><strong>Species: </strong>{{ char.species }}</p>
+        <p><strong>Status: </strong>{{ char.status }}</p>
+        <p><strong>Origin: </strong>{{ char.origin.name }}</p>
+
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item text-bg-light">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      [attr.data-bs-target]="'#miAccordion'" aria-expanded="false" aria-controls="miAccordion">
+                Episodes:
+              </button>
+            </h2>
+            <div [attr.id]="'miAccordion'" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <ul>
+                  <li *ngFor="let episode of char.episode" class="text-muted-small">{{ episode }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-3 col-xxl-3 text-center my-3">
+      <button class=" btn btn-outline-primary miBoton" (click)="anterior()">
+        Anterior
+      </button>
+    </div>
+    <div class="col-lg-3 col-xxl-3 text-center my-3">
+      <button class=" btn btn-outline-danger miBoton" (click)="siguiente()">
+        Siguiente
+      </button>
+    </div>
+  </div>
+</div>
+

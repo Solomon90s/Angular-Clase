@@ -1,0 +1,38 @@
+<h1>El nombre del objeto es {{objeto.nombre | titlecase}}</h1>
+<h3>El número es {{numero | currency:'EUR' }}</h3>
+<p>{{nombre}} tiene un valor booleano de es válido: <span
+  [ngClass]="{'verde':esValido,'rojo':!esValido}">{{esValido}}</span></p>
+<p>La fecha de hoy es {{fecha | date: 'fullDate' }}</p>
+<p>{{coleccionNumeros}}</p>
+<p>Array de string Superheroes: </p>
+<ul>
+  <li *ngFor="let heroes of superHeroes">{{heroes}}</li>
+</ul>
+
+<p>
+  Array de objetos Personas: <span *ngFor="let persona of personas">{{persona.nombre}} - {{persona.edad}},</span>
+</p>
+
+<h2>
+  Hola caracola
+</h2>
+<h2>
+  Hola desarrolladores
+</h2>
+<p>
+  <button (click)="sumarUno()">Sumar</button>
+  {{numeroONo}}
+</p>
+
+<p>
+  <input type="text" [(ngModel)]="nombre">
+  <input type="number" [(ngModel)]="edad">
+  <button (click)="trabajarConArrays()">Add Persona</button>
+  <button (click)="trabajarConArraysMenos()">Delete Persona</button>
+</p>
+<p>Interfaz superheore: {{superheroe.nombre}} - {{superheroe.superpoder}} </p>
+<p>Diferencias entre clase e interfaz:</p>
+<ul>
+  <li>La clase va a tener un constructor, porque yo quiero crear un objeto de ese tipo</li>
+  <li>La interfaz en cambio son objetos que me están viniendo normalmente de una API, y lo único que voy hacer es rellenar un modelo de datos, array o un objeto </li>
+</ul>

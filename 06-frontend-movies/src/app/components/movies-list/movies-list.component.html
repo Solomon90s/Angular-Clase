@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="row my-3">
+    <div class="col-xl-12 col-lg-12 toolbar p-3">
+      <ng-form (ngSubmit)="search($event)">
+        <div class="d-flex">
+          <h2>{{ moviesList.length }} Movies
+            <fa-icon [icon]="faHeart" *ngIf="favorites" (click)="favoriteList()" class="text-danger"></fa-icon>
+            <fa-icon [icon]="faHeartBroken" *ngIf="!favorites" (click)="favoriteList()" class="text-danger"></fa-icon>
+          </h2>
+        </div>
+        <div class="d-flex justify-content-center">
+          <fa-icon class="position-relative start-10 align-self-center" [icon]="faMagnifyingGlass"></fa-icon>
+          <input type="search" #searchInput placeholder="Search..." (keyup)="search(searchInput.value)"
+                 class="form-control ms-3 ps-5 w-50">
+        </div>
+
+      </ng-form>
+    </div>
+  </div>
+
+  <!-- Listado de Movies -->
+  <div class="row">
+    <!-- Esto lo hacemos para poder hacer cada modal individual, IMPORTANTE let i = index"
+     *ngFor="let movie of moviesList; let i = index"
+     -->
+    <div class="mt-2 col-xl-3 col-sm-6 col-md-4 col-lg-3 col-xxl-3" *ngFor="let movie of moviesList; let i = index">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>
+              {{ movie.title }}
+              <fa-icon [icon]="faHeart" *ngIf="movie.favorite" (click)="changeFavorite(movie)"
+                       class="text-danger img-fluid" [fixedWidth]></fa-icon>
+              <fa-icon [icon]="faHeartBroken" *ngIf="!movie.favorite" (click)="changeFavorite(movie)"
+                       class="text-danger img-fluid" [fixedWidth]></fa-icon>
+            </h2>
+          </div>
+          <div class="card-subtitle">{{ movie.director }} | {{ movie.year }}</div>
+        </div>
+        <img [src]="movie.poster" [alt]="movie.title" class="card-img-top">
+        <div class="card-body">
+          <p class="card-text">{{ movie.plot }}</p>
+          <p class="card-text"><strong>IMDB: </strong> <span
+            class="badge text-bg-success">{{ movie.imdb.rating }}</span></p>
+          <p class="card-text"><strong>Votes: </strong> <span
+            class="badge text-bg-success">{{ movie.imdb.votes }}</span></p>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex justify-content-between">
+            <p class="text-muted"><span
+              *ngFor="let genre of movie.genres; let last = last">{{ last ? genre + '.' : genre + ', ' }}</span></p>
+            <div class="buttons d-flex">
+              <button class="btn" [routerLink]="'/movies/edit/'+movie._id">
+                <h2>
+                  <fa-icon [icon]="faEdit" class="text-primary"></fa-icon>
+                </h2>
+              </button>
+              <!-- Esto lo hacemos para que cada modal sea individual y unico y poder borrar las peliculas correctamente
+              [attr.data-bs-target]="'#deleteModal'+i" -->
+              <button class="btn" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal'+i">
+                <h2>
+                  <fa-icon [icon]="faTrashCan" class="text-danger"></fa-icon>
+                </h2>
+              </button>
+
+              <!--Vamos a montar el modal DE BORRADO -->
+              <!--Esto lo hacemos para que cada modal sea individual y unico y poder borrar las peliculas correctamente
+               [attr.id]="'deleteModal'+i"
+               -->
+              <div class="modal fade" [attr.id]="'deleteModal'+i" tabindex="-1" aria-labelledby="#deleModalLabel"
+                   aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Movie</h1>
+                      <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                      ¿Quieres borrar {{ movie.title }}?
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-outline-danger" type="button" data-bs-dismiss="modal"
+                              (click)="deleteMovie(movie)">
+                        Borrar
+                      </button>
+                      <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ngb-toast class="toast-container position-fixed bg-success text-light top-0 end-50 p-1"
+               style="z-index: 1200" *ngIf="toastShow">
+      {{ toast.body }}
+    </ngb-toast>
+  </div>
+</div>

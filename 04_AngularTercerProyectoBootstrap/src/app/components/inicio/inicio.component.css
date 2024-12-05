@@ -1,0 +1,7 @@
+img:hover{
+  border: solid 2px silver;
+  transform: scale(115%);
+  transition-duration: 750ms;
+  cursor: pointer;
+}
+

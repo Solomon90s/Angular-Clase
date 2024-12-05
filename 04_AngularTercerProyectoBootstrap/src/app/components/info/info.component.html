@@ -1,0 +1,39 @@
+<!-- CON EL NGIF LE DECIMOS QUE MIENTRAS CARGA LA INFO DE LA API-->
+<h1 *ngIf="dataApi">Hay un total de {{dataApi.info.count}} personajes en esta API</h1>
+<div class="d-flex justify-content-end">
+  <div>
+    <!-- Llamamos a la paginacion con, <ngb-pagination</ngb-pagination>-->
+    <!-- BANANA ON THE BOX, [()], doble enlace de datos. Voy a vincular la variable page(que tengo en el typescript), con el objeto ngb-pagination.-->
+    <!-- BANANA ON THE BOX, [()], Cuando yo modifique el HTML se modificará el valor en el typescript y viceversa  .-->
+
+    <!-- [(page)] = "page", que lo vinculamos con nuestra variable page -->
+    <!-- [pageSize]="20", tamaño de pagina-->
+    <!-- [collectionSize]="dataApi.info.count", donde cogemos la información-->
+    <!-- [maxSize]="3", numero total de elementos que voy a poner de corrido -->
+    <!-- [rotate]="true", -->
+    <!-- [boundaryLinks] ="true", flechas de avanzar e ir atras-->
+    <!-- (pageChange)="loadCharacters()">,el evento (pageChange) llama a la funcion loadCharacters() y muestra los nuevos elementos-->
+    <ngb-pagination
+      [(page)] = "page"
+      [pageSize]="20"
+      [collectionSize]="dataApi.info.count"
+      [maxSize]="3"
+      [rotate]="true"
+      [boundaryLinks] ="true"
+      (pageChange)="loadCharacters()">
+    </ngb-pagination>
+  </div>
+</div>
+<div class="row" *ngIf="dataApi">
+  <div class="col-lg-3 my-2" *ngFor="let char of dataApi.results;">
+    <!-- Esta es una forma de hacerlo -->
+    <div class="card miCard sombra" [routerLink]="'/info-detail/'+char.id">
+      <div class="card-header bg-secondary-subtle">
+        <div class="card-title">
+          <h3 class="text-primary text-center">{{char.name}}</h3>
+        </div>
+      </div>
+      <img [src]="char.image" class="card-img-top p-1" [alt]="char.name">
+    </div>
+  </div>
+</div>
